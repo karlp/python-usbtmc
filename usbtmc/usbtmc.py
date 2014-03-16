@@ -110,6 +110,24 @@ def find_device(idVendor = None, idProduct = None, iSerial = None):
         
     return None
 
+def pack_ieee4882(packed):
+    """
+    Constructs an IEEE488.2 binary data header for some prepacked data
+         #xyyymmmmm
+         # indicates this is binary data
+         x i number of digits in y
+         y is the decimal length of mmm
+         mmm is the data to transfer
+
+    an example for 16bit data is
+    packed = struct.pack(">%dh" % len(data), *data)
+    binary = pack_ieee4882(packed)
+    """
+    len_len = len(packed)
+    header = "#%d%d" % (len(str(len_len)), len_len)
+    return header + packed
+
+
 class Instrument(object):
     "USBTMC instrument interface client"
     def __init__(self, *args, **kwargs):

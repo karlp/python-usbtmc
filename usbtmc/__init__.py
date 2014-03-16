@@ -28,3 +28,5 @@ __all__ = ["usbtmc"]
 
 from .usbtmc import Instrument
 from .usbtmc import list_devices
+from .usbtmc import pack_ieee4882
+
